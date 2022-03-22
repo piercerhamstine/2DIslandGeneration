@@ -21,6 +21,7 @@ Makefile
 *.o
 *.so
 *.so.*
+FastNoiseLite.h
 
 # Executables
 *.exe
