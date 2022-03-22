@@ -1,0 +1,26 @@
+#VSCODE
+.vscode
+.vscode/*
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+#Make
+main
+Make
+Makefile
+
+#Extras
+*.gch
+*.dll
+*.o
+*.so
+*.so.*
+
+# Executables
+*.exe
