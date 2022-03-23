@@ -13,7 +13,7 @@ int main()
     window.create(sf::VideoMode(800, 400), "SFML");
 
     Map m;
-    m.GenerateMap(sf::Vector2u(10,10), 20, 20);
+    m.GenerateMap(sf::Vector2u(2,2), 200, 200);
 
     while (window.isOpen())
     {

@@ -6,6 +6,7 @@ void Map::GenerateMap(sf::Vector2u tileSize, unsigned int width, unsigned int he
 {
     FastNoiseLite noise;
     noise.SetNoiseType(FastNoiseLite::NoiseType::NoiseType_Perlin);
+    noise.SetFrequency(.01f);
 
     vertices.setPrimitiveType(sf::Quads);
     vertices.resize(width*height*4);
@@ -25,10 +26,24 @@ void Map::GenerateMap(sf::Vector2u tileSize, unsigned int width, unsigned int he
 
             sf::Color tileColor;
             if(nVal < 0.1)
+            {
                 tileColor = water;
-            else
+            }
+            else if(nVal < 0.2)
+            {
+                tileColor = coast;
+            }
+            else if(nVal < 0.5)
             {
                 tileColor = grass;
+            }
+            else if(nVal < .8)
+            {
+                tileColor = stone;
+            }
+            else
+            {
+                tileColor = snow;
             }
 
             for(int i = 0; i < 4; ++i)
