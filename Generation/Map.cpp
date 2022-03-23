@@ -4,9 +4,14 @@ Map::Map():vertices(){};
 
 void Map::GenerateMap(sf::Vector2u tileSize, unsigned int width, unsigned int height)
 {
+    float frq = 1.f;
+
     FastNoiseLite noise;
-    noise.SetNoiseType(FastNoiseLite::NoiseType::NoiseType_Perlin);
-    noise.SetFrequency(.01f);
+    noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+    noise.SetFrequency(.03f);
+
+    FastNoiseLite moisterNoise;
+    noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 
     vertices.setPrimitiveType(sf::Quads);
     vertices.resize(width*height*4);
@@ -22,7 +27,10 @@ void Map::GenerateMap(sf::Vector2u tileSize, unsigned int width, unsigned int he
             quad[2].position = sf::Vector2f((i+1)*tileSize.x, (j+1)*tileSize.y);
             quad[3].position = sf::Vector2f(i*tileSize.x, (j+1)*tileSize.y);
 
-            float nVal = noise.GetNoise((float)i, (float)j);
+            float nVal = noise.GetNoise((float)i*frq, (float)j*frq) + 0.5f * noise.GetNoise((float)i*2, (float)j*2) + 0.25f * noise.GetNoise((float)i*4, (float)j*4);
+            nVal = nVal / (1+0.5f+0.25f);
+
+            nVal = pow(nVal, 2);
 
             sf::Color tileColor;
             if(nVal < 0.1)

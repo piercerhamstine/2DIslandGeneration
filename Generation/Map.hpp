@@ -3,6 +3,7 @@
 
 #include "../FastNoiseLite.h"
 #include "SFML/Graphics.hpp"
+#include <math.h>
 
 class Map : public sf::Drawable
 {
