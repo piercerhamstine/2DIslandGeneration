@@ -11,9 +11,21 @@ public:
     Map();
 
     void GenerateMap(sf::Vector2u tileSize, unsigned int width, unsigned int height);
+    void UpdateMap();
+
+    float GetFreq();
+    void SetFreq(float val);
+    float GetRedist();
 private:
     virtual void draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const;
     sf::VertexArray vertices;
+
+    float freq;
+    float redist;
+
+    int mapWidth;
+    int mapHeight;
+    sf::Vector2f tileSize;
 
     sf::Color grass = sf::Color(76, 164, 39);
     sf::Color water = sf::Color(33, 150, 208);
