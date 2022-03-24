@@ -35,6 +35,17 @@ int main()
             m.UpdateMap();
         }
 
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        {
+            m.SetRedist(m.GetRedist() - .1f);
+            m.UpdateMap();
+        }
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        {
+            m.SetRedist(m.GetRedist() + .1f);
+            m.UpdateMap();
+        }
+
         window.clear();
         window.draw(m);
         window.display();

@@ -17,6 +17,11 @@ float Map::GetRedist()
     return redist;
 };
 
+void Map::SetRedist(float val)
+{
+    redist = val;
+}
+
 void Map::GenerateMap(sf::Vector2u tileSize, unsigned int width, unsigned int height)
 {
     mapWidth = width;

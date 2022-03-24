@@ -16,6 +16,7 @@ public:
     float GetFreq();
     void SetFreq(float val);
     float GetRedist();
+    void SetRedist(float val);
 private:
     virtual void draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const;
     sf::VertexArray vertices;
