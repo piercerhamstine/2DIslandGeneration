@@ -29,6 +29,7 @@ private:
     sf::Vector2f tileSize;
 
     sf::Color grass = sf::Color(76, 164, 39);
+    sf::Color forest = sf::Color(46, 107, 17);
     sf::Color water = sf::Color(33, 150, 208);
     sf::Color stone = sf::Color(125, 125, 125);
     sf::Color snow = sf::Color(242, 242, 242);

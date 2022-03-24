@@ -4,7 +4,7 @@
 #include "FastNoiseLite.h"
 
 #include "Generation/Map.hpp"
-
+#include <iostream>
 
 sf::RenderWindow window;
 
@@ -12,8 +12,12 @@ int main()
 {
     window.create(sf::VideoMode(800, 400), "SFML");
 
+    FastNoiseLite noise;
+    noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+
+
     Map m;
-    m.GenerateMap(sf::Vector2u(2,2), 400, 200);
+    m.GenerateMap(sf::Vector2u(2,2), 400, 100);
 
     while (window.isOpen())
     {
@@ -26,23 +30,23 @@ int main()
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
-            m.SetFreq(m.GetFreq() - .1f);
+            m.SetFreq(m.GetFreq() - .01f);
             m.UpdateMap();
         }
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
-            m.SetFreq(m.GetFreq() + .1f);
+            m.SetFreq(m.GetFreq() + .01f);
             m.UpdateMap();
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         {
-            m.SetRedist(m.GetRedist() - .1f);
+            m.SetRedist(m.GetRedist() - .01f);
             m.UpdateMap();
         }
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
         {
-            m.SetRedist(m.GetRedist() + .1f);
+            m.SetRedist(m.GetRedist() + .01f);
             m.UpdateMap();
         }
 
