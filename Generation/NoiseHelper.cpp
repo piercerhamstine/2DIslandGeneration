@@ -1,9 +1,19 @@
 #include "NoiseHelper.hpp"
 
+NoiseHelper::NoiseHelper()
+{
+    noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+};
+
 NoiseHelper::NoiseHelper(FastNoiseLite::NoiseType noiseType)
 {
     noise.SetNoiseType(noiseType);
-}
+};
+
+void NoiseHelper::SetNoiseType(FastNoiseLite::NoiseType noiseType)
+{
+    noise.SetNoiseType(noiseType);
+};
 
 void NoiseHelper::SetSeed(int seed)
 {

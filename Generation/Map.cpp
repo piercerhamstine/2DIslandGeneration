@@ -3,51 +3,17 @@
 
 Map::Map(sf::Vector2u tileSize, unsigned int width, unsigned int height):vertices()
 {
-    elevationNoise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
-    moisterNoise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
-
     mapWidth = width;
     mapHeight = height;
     this->tileSize = tileSize;
 
+    elevation.SetNoiseType(FastNoiseLite::NoiseType::NoiseType_OpenSimplex2);
+    elevation.SetSeed(0);
+
     vertices.setPrimitiveType(sf::Quads);
     vertices.resize(mapWidth*mapHeight*4);
-};
 
-sf::Color Map::GetTileType(float eVal, float mVal)
-{
-    if(eVal < .1) return ocean;
-    if(eVal < 0.15) return coast;
-
-    if(eVal > 0.8)
-    {
-        if(mVal < .3)
-        {
-            return snow;
-        }
-
-        return stone;
-    };
-
-    if(eVal > 0.35)
-    {
-        if(mVal < .4)
-        {
-            return forest;
-        }
-        return grass;
-    };
-
-    return plains;
-};
-
-float GetNoise(float x, float y)
-{
-
-};
-
-void Map::GenerateMap()
-{
+    // Set vertex positions;
     for(unsigned int i = 0; i < mapWidth; ++i)
     {
         for(unsigned int j = 0; j < mapHeight; ++j)
@@ -62,13 +28,29 @@ void Map::GenerateMap()
     };
 };
 
-void Map::UpdateMap()
+sf::Color Map::GetTileType(float eVal)
+{
+    if(eVal > .9) return snow;
+    if(eVal > .6) return stone;
+    if(eVal > .3) return grass;
+    if(eVal > .2) return coast;
+
+    return ocean;
+};
+
+void Map::GenerateMap()
 {
     for(unsigned int i = 0; i < mapWidth; ++i)
     {
         for(unsigned int j = 0; j < mapHeight; ++j)
         {
             sf::Vertex* quad = &vertices[(i+j*mapWidth)*4];
+
+            float eVal = elevation.GetNoise(i, j);
+
+            currentTileColor = GetTileType(eVal);
+
+            quad[0].color = quad[1].color = quad[2].color = quad[3].color = currentTileColor;
         };
     };
 };
