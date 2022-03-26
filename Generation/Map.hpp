@@ -25,9 +25,6 @@ private:
 
     sf::Color GetTileType(float eval, float mval);
 
-    FastNoiseLite elevationNoise;
-    FastNoiseLite moisterNoise;
-
     unsigned int mapWidth;
     unsigned int mapHeight;
     sf::Vector2u tileSize;

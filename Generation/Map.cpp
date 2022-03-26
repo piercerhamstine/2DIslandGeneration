@@ -3,44 +3,16 @@
 
 Map::Map(sf::Vector2u tileSize, unsigned int width, unsigned int height):vertices()
 {
-    seaNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
-    seaNoise.SetSeed(50);
-
-    elevationNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
-
-    moisterNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
-    moisterNoise.SetSeed(100);
-
+    elevationNoise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
+    moisterNoise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
 
     mapWidth = width;
     mapHeight = height;
     this->tileSize = tileSize;
-    freq = 1.f;
-    redist = 1.f;
 
     vertices.setPrimitiveType(sf::Quads);
     vertices.resize(mapWidth*mapHeight*4);
 };
-
-float Map::GetFreq()
-{
-    return freq;
-};
-
-void Map::SetFreq(float val)
-{
-    freq = val;
-};
-
-float Map::GetRedist()
-{
-    return redist;
-};
-
-void Map::SetRedist(float val)
-{
-    redist = val;
-}
 
 sf::Color Map::GetTileType(float eVal, float mVal)
 {
