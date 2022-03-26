@@ -16,8 +16,8 @@ int main()
     noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 
 
-    Map m;
-    m.GenerateMap(sf::Vector2u(2,2), 400, 100);
+    Map m(sf::Vector2u(1,1), 200, 200);
+    m.GenerateMap();
 
     while (window.isOpen())
     {

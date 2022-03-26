@@ -1,7 +1,26 @@
 #include "Map.hpp"
 #include <iostream>
 
-Map::Map():vertices(){};
+Map::Map(sf::Vector2u tileSize, unsigned int width, unsigned int height):vertices()
+{
+    seaNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+    seaNoise.SetSeed(50);
+
+    elevationNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+
+    moisterNoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+    moisterNoise.SetSeed(100);
+
+
+    mapWidth = width;
+    mapHeight = height;
+    this->tileSize = tileSize;
+    freq = 1.f;
+    redist = 1.f;
+
+    vertices.setPrimitiveType(sf::Quads);
+    vertices.resize(mapWidth*mapHeight*4);
+};
 
 float Map::GetFreq()
 {
@@ -23,118 +42,61 @@ void Map::SetRedist(float val)
     redist = val;
 }
 
-void Map::GenerateMap(sf::Vector2u tileSize, unsigned int width, unsigned int height)
+sf::Color Map::GetTileType(float eVal, float mVal)
 {
-    mapWidth = width;
-    mapHeight = height;
-    tileSize = tileSize;
-    freq = 1.f;
-    redist = 1.f;
+    if(eVal < .1) return ocean;
+    if(eVal < 0.15) return coast;
 
-    FastNoiseLite noise;
-    noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
-
-    //FastNoiseLite moisterNoise;
-    //noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
-
-    vertices.setPrimitiveType(sf::Quads);
-    vertices.resize(width*height*4);
-
-    sf::Color tileColor;
-    for(unsigned int i = 0; i < width; ++i)
+    if(eVal > 0.8)
     {
-        for(unsigned int j = 0; j < height; ++j)
+        if(mVal < .3)
         {
-            sf::Vertex* quad = &vertices[(i+j*width)*4];
+            return snow;
+        }
 
-            quad[0].position = sf::Vector2f(i*tileSize.x, j*tileSize.y);
-            quad[1].position = sf::Vector2f((i+1)*tileSize.x, j*tileSize.y);
-            quad[2].position = sf::Vector2f((i+1)*tileSize.x, (j+1)*tileSize.y);
-            quad[3].position = sf::Vector2f(i*tileSize.x, (j+1)*tileSize.y);
-
-            float nVal = noise.GetNoise((float)i*freq, (float)j*freq);
-            nVal = (nVal - (-1))/(1-(-1));
-            nVal = pow(nVal, redist);
-            
-            if(nVal < 0.1)
-            {
-                tileColor = water;
-            }
-            else if(nVal < 0.2)
-            {
-                tileColor = coast;
-            }
-            else if(nVal < 0.5)
-            {
-                tileColor = grass;
-            }
-            else if(nVal < 0.7)
-            {
-                tileColor = forest;
-            }
-            else if(nVal < .9)
-            {
-                tileColor = stone;
-            }
-            else
-            {
-                tileColor = snow;
-            }
-
-            for(int i = 0; i < 4; ++i)
-            {
-                quad[i].color = tileColor;
-            }
-        };
+        return stone;
     };
+
+    if(eVal > 0.35)
+    {
+        if(mVal < .4)
+        {
+            return forest;
+        }
+        return grass;
+    };
+
+    return plains;
 };
 
-void Map::UpdateMap()
+float GetNoise(float x, float y)
 {
-    FastNoiseLite noise;
-    noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
-    
-    sf::Color tileColor;
+
+};
+
+void Map::GenerateMap()
+{
     for(unsigned int i = 0; i < mapWidth; ++i)
     {
         for(unsigned int j = 0; j < mapHeight; ++j)
         {
             sf::Vertex* quad = &vertices[(i+j*mapWidth)*4];
 
-            float nVal = noise.GetNoise((float)i*freq, (float)j*freq);
-            nVal = (nVal - (-1))/(1-(-1));
+            quad[0].position = sf::Vector2f(i*tileSize.x, j*tileSize.y);
+            quad[1].position = sf::Vector2f((i+1)*tileSize.x, j*tileSize.y);
+            quad[2].position = sf::Vector2f((i+1)*tileSize.x, (j+1)*tileSize.y);
+            quad[3].position = sf::Vector2f(i*tileSize.x, (j+1)*tileSize.y);
+        };
+    };
+};
 
-            nVal = pow(nVal, redist);
-
-            if(nVal < 0.1)
-            {
-                tileColor = water;
-            }
-            else if(nVal < 0.2)
-            {
-                tileColor = coast;
-            }
-            else if(nVal < 0.5)
-            {
-                tileColor = grass;
-            }
-            else if(nVal < 0.7)
-            {
-                tileColor = forest;
-            }
-            else if(nVal < .9)
-            {
-                tileColor = stone;
-            }
-            else
-            {
-                tileColor = snow;
-            }
-
-            for(int i = 0; i < 4; ++i)
-            {
-                quad[i].color = tileColor;
-            }
+void Map::UpdateMap()
+{
+    for(unsigned int i = 0; i < mapWidth; ++i)
+    {
+        for(unsigned int j = 0; j < mapHeight; ++j)
+        {
+            sf::Vertex* quad = &vertices[(i+j*mapWidth)*4];
         };
     };
 };
