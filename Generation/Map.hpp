@@ -26,6 +26,7 @@ private:
 
     NoiseHelper elevation;
 
+    sf::Color plains = sf::Color(214, 252, 76);
     sf::Color grass = sf::Color(76, 164, 39);
     sf::Color ocean = sf::Color(33, 150, 208);
     sf::Color stone = sf::Color(125, 125, 125);

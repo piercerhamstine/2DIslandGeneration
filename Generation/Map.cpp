@@ -33,7 +33,8 @@ sf::Color Map::GetTileType(float eVal)
     if(eVal > .9) return snow;
     if(eVal > .6) return stone;
     if(eVal > .3) return grass;
-    if(eVal > .2) return coast;
+    if(eVal > .2) return plains;
+    if(eVal > .15) return coast;
 
     return ocean;
 };
@@ -46,10 +47,17 @@ void Map::GenerateMap()
         {
             sf::Vertex* quad = &vertices[(i+j*mapWidth)*4];
 
-            float eVal = elevation.GetNoise(i, j);
+            float eVal = 1.f * elevation.GetNoise(i*1.f, j*1.f) + (0.5f * elevation.GetNoise(i*2.f, j*2.f))+ (0.25f * elevation.GetNoise(i*4.f, j*4.f))
+            + (0.125f * elevation.GetNoise(i*8, j*8));
+            eVal = eVal / (1.f + 0.5f+0.25f+0.125f);
+
+            float dx = abs((float)i - (float)mapWidth/2.f)/(mapWidth/2.f);
+            float dy = abs((float)j - (float)mapWidth/2.f)/(mapWidth/2.f);
+            float d = 1-((dx*dx+dy*dy));
+
+            eVal = eVal*d;
 
             currentTileColor = GetTileType(eVal);
-
             quad[0].color = quad[1].color = quad[2].color = quad[3].color = currentTileColor;
         };
     };
