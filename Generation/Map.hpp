@@ -12,8 +12,6 @@ public:
     Map(sf::Vector2u tileSize, unsigned int width, unsigned int height);
 
     void GenerateMap();
-
-    float offset;
 private:
     virtual void draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const;
     sf::VertexArray vertices;
@@ -30,7 +28,7 @@ private:
 
     NoiseHelper elevation;
     NoiseHelper moisture;
-    
+
     sf::Color plains = sf::Color(214, 252, 76);
     sf::Color grass = sf::Color(76, 164, 39);
     sf::Color ocean = sf::Color(33, 150, 208);

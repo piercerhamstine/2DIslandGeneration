@@ -10,8 +10,6 @@ Map::Map(sf::Vector2u tileSize, unsigned int width, unsigned int height):vertice
     centerX = (float)mapWidth/2.f;
     centerY = (float)mapHeight/2.f;
 
-    offset = .05f;
-
     elevation.SetNoiseType(FastNoiseLite::NoiseType::NoiseType_OpenSimplex2);
     elevation.SetSeed(time(nullptr));
 
@@ -41,7 +39,7 @@ float Map::GetAdjustedRange(float val, float min, float max)
     return (val - min) / (max - min);
 };
 
-sf::Color Map::GetTileType(float eVal)
+sf::Color Map::GetTileType(float eVal, float mVal)
 {
     if(eVal > .9) return snow;
     if(eVal > .6) return stone;
@@ -78,12 +76,12 @@ void Map::GenerateMap()
             // Make sure distance doesn't exceed 1
             if(dist > 1.0f) dist = 1.0f;
 
-            // Apply gradient to noise.
+            // Apply gradient to noise
             eVal = (eVal-dist);
             if(eVal < 0.f) eVal = 0.f;
             eVal = GetAdjustedRange(eVal, 0.f, 1.f);
 
-            currentTileColor = GetTileType(eVal);
+            currentTileColor = GetTileType(eVal, mVal);
             quad[0].color = quad[1].color = quad[2].color = quad[3].color = currentTileColor;
         };
     };

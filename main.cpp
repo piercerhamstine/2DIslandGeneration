@@ -26,13 +26,9 @@ int main()
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
-            m.offset -= 0.01f;
-            m.GenerateMap();
         }
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
-            m.offset += 0.01f;
-            m.GenerateMap();
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
