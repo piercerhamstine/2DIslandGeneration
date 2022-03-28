@@ -29,12 +29,13 @@ private:
     NoiseHelper elevation;
     NoiseHelper moisture;
 
-    sf::Color plains = sf::Color(214, 252, 76);
-    sf::Color grass = sf::Color(76, 164, 39);
-    sf::Color ocean = sf::Color(33, 150, 208);
-    sf::Color stone = sf::Color(125, 125, 125);
-    sf::Color snow = sf::Color(242, 242, 242);
-    sf::Color coast = sf::Color(246, 234, 124);
+    sf::Color snow = sf::Color(250, 248, 250);
+    sf::Color stone = sf::Color(162, 159, 161);
+    sf::Color forest = sf::Color(90, 102, 82);
+    sf::Color grass = sf::Color(92, 153, 51);
+    sf::Color plains = sf::Color(162,179,107);
+    sf::Color coast = sf::Color(227, 208, 79);
+    sf::Color ocean = sf::Color(0, 163, 131);
 };
 
 #endif

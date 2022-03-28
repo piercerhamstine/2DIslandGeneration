@@ -41,12 +41,29 @@ float Map::GetAdjustedRange(float val, float min, float max)
 
 sf::Color Map::GetTileType(float eVal, float mVal)
 {
-    if(eVal > .9) return snow;
-    if(eVal > .6) return stone;
-    if(eVal > .3) return grass;
-    if(eVal > .2) return plains;
-    if(eVal > .15) return coast;
+    if(eVal > .9)
+    {
+        if(mVal > .3f) return snow;
+        return stone;
+    };
+    if(eVal > .6)
+    {
+        if(mVal > .3f) return forest;
+        return stone;
+    };
+    if(eVal > .3)
+    {
+        if(mVal > .3f) return grass;
+        return plains;
+    };
 
+    if(eVal > .2)
+    {
+        if(mVal > .4f) return plains;
+        return coast;
+    }
+
+    if(eVal > .15) return coast;
     return ocean;
 };
 
@@ -62,6 +79,9 @@ void Map::GenerateMap()
             float eVal = 1.f * elevation.GetNoise(i*1.f, j*1.f) + (0.5f * elevation.GetNoise(i*2.f, j*2.f))+ (0.25f * elevation.GetNoise(i*4.f, j*4.f))
             + (0.125f * elevation.GetNoise(i*8, j*8));
             eVal = eVal / (1.f + 0.5f+0.25f+0.125f);
+
+            // Elevation shaping
+            eVal = pow(eVal*1.25f, .4f);
 
             // Moisture Noise
             float mVal = 1.f * moisture.GetNoise(i*1.f, j*1.f) + (0.25f * moisture.GetNoise(i*4.f, j*4.f)) + (0.0625f*moisture.GetNoise(i*16.f,j*16.f));
