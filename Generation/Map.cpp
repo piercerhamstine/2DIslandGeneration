@@ -7,6 +7,13 @@ Map::Map(sf::Vector2u tileSize, unsigned int width, unsigned int height):vertice
     mapHeight = height;
     this->tileSize = tileSize;
 
+    centerX = (float)mapWidth/2.f;
+    centerY = (float)mapHeight/2.f;
+    maxGradVal = sqrt(centerX*centerX + centerY*centerY);
+    minGradVal = 0;
+
+    offset = .05f;
+
     elevation.SetNoiseType(FastNoiseLite::NoiseType::NoiseType_OpenSimplex2);
     elevation.SetSeed(0);
 
@@ -26,6 +33,11 @@ Map::Map(sf::Vector2u tileSize, unsigned int width, unsigned int height):vertice
             quad[3].position = sf::Vector2f(i*tileSize.x, (j+1)*tileSize.y);
         };
     };
+};
+
+float Map::GetAdjustedRange(float val)
+{
+    return (val - minGradVal) / (maxGradVal - minGradVal);
 };
 
 sf::Color Map::GetTileType(float eVal)
@@ -51,14 +63,15 @@ void Map::GenerateMap()
             + (0.125f * elevation.GetNoise(i*8, j*8));
             eVal = eVal / (1.f + 0.5f+0.25f+0.125f);
 
-            float dx = abs((float)i - (float)mapWidth/2.f)/(mapWidth/2.f);
-            float dy = abs((float)j - (float)mapWidth/2.f)/(mapWidth/2.f);
-            float d = 1-((dx*dx+dy*dy));
+            float dx = centerX - (float)i;
+            float dy = centerY - (float)j;
+            float dist = sqrt((dx*dx)+(dy*dy));
+            dist = GetAdjustedRange(dist);
 
-            eVal = eVal*d;
+            sf::Color c = sf::Color(255*dist, 255*dist, 255*dist);
 
-            currentTileColor = GetTileType(eVal);
-            quad[0].color = quad[1].color = quad[2].color = quad[3].color = currentTileColor;
+            //currentTileColor = GetTileType(d);
+            quad[0].color = quad[1].color = quad[2].color = quad[3].color = c;
         };
     };
 };

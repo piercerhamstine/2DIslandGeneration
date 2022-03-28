@@ -12,7 +12,7 @@ int main()
 {
     window.create(sf::VideoMode(800, 400), "SFML");
 
-    Map m(sf::Vector2u(1,1), 400, 400);
+    Map m(sf::Vector2u(1,1), 200, 200);
     m.GenerateMap();
 
     while (window.isOpen())
@@ -26,9 +26,13 @@ int main()
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
+            m.offset -= 0.01f;
+            m.GenerateMap();
         }
         else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
+            m.offset += 0.01f;
+            m.GenerateMap();
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))

@@ -12,14 +12,20 @@ public:
     Map(sf::Vector2u tileSize, unsigned int width, unsigned int height);
 
     void GenerateMap();
+
+    float offset;
 private:
     virtual void draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const;
     sf::VertexArray vertices;
-
+    float GetAdjustedRange(float val);
     sf::Color GetTileType(float eval);
 
     unsigned int mapWidth;
     unsigned int mapHeight;
+    float maxGradVal;
+    float minGradVal;
+    float centerX;
+    float centerY;
     sf::Vector2u tileSize;
 
     sf::Color currentTileColor;
