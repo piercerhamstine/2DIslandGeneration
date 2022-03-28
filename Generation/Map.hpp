@@ -16,7 +16,7 @@ private:
     virtual void draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const;
     sf::VertexArray vertices;
     float GetAdjustedRange(float val, float min, float max);
-    sf::Color GetTileType(float eval);
+    sf::Color GetTileType(float eVal, float mVal);
 
     unsigned int mapWidth;
     unsigned int mapHeight;
