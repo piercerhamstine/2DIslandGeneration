@@ -10,9 +10,9 @@ sf::RenderWindow window;
 
 int main()
 {
-    window.create(sf::VideoMode(800, 400), "SFML");
+    window.create(sf::VideoMode(1200, 720), "SFML");
 
-    Map m(sf::Vector2u(1,1), 200, 200);
+    Map m(sf::Vector2u(1,1), 700, 700);
     m.GenerateMap();
 
     while (window.isOpen())

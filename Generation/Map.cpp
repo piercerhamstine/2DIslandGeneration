@@ -9,13 +9,14 @@ Map::Map(sf::Vector2u tileSize, unsigned int width, unsigned int height):vertice
 
     centerX = (float)mapWidth/2.f;
     centerY = (float)mapHeight/2.f;
-    maxGradVal = sqrt(centerX*centerX + centerY*centerY);
-    minGradVal = 0;
 
     offset = .05f;
 
     elevation.SetNoiseType(FastNoiseLite::NoiseType::NoiseType_OpenSimplex2);
-    elevation.SetSeed(0);
+    elevation.SetSeed(time(nullptr));
+
+    moisture.SetNoiseType(FastNoiseLite::NoiseType::NoiseType_OpenSimplex2);
+    moisture.SetSeed(time(NULL));
 
     vertices.setPrimitiveType(sf::Quads);
     vertices.resize(mapWidth*mapHeight*4);
@@ -35,9 +36,9 @@ Map::Map(sf::Vector2u tileSize, unsigned int width, unsigned int height):vertice
     };
 };
 
-float Map::GetAdjustedRange(float val)
+float Map::GetAdjustedRange(float val, float min, float max)
 {
-    return (val - minGradVal) / (maxGradVal - minGradVal);
+    return (val - min) / (max - min);
 };
 
 sf::Color Map::GetTileType(float eVal)
@@ -59,19 +60,31 @@ void Map::GenerateMap()
         {
             sf::Vertex* quad = &vertices[(i+j*mapWidth)*4];
 
+            // Elevation Noise
             float eVal = 1.f * elevation.GetNoise(i*1.f, j*1.f) + (0.5f * elevation.GetNoise(i*2.f, j*2.f))+ (0.25f * elevation.GetNoise(i*4.f, j*4.f))
             + (0.125f * elevation.GetNoise(i*8, j*8));
             eVal = eVal / (1.f + 0.5f+0.25f+0.125f);
 
+            // Moisture Noise
+            float mVal = 1.f * moisture.GetNoise(i*1.f, j*1.f) + (0.25f * moisture.GetNoise(i*4.f, j*4.f)) + (0.0625f*moisture.GetNoise(i*16.f,j*16.f));
+            mVal = mVal/(1.f + 0.25f + 0.0625f);
+
+            // Gradient
             float dx = centerX - (float)i;
             float dy = centerY - (float)j;
-            float dist = sqrt((dx*dx)+(dy*dy));
-            dist = GetAdjustedRange(dist);
+            float dist = sqrt(dx*dx + dy*dy);
+            dist = GetAdjustedRange(dist, 0, centerX);
 
-            sf::Color c = sf::Color(255*dist, 255*dist, 255*dist);
+            // Make sure distance doesn't exceed 1
+            if(dist > 1.0f) dist = 1.0f;
 
-            //currentTileColor = GetTileType(d);
-            quad[0].color = quad[1].color = quad[2].color = quad[3].color = c;
+            // Apply gradient to noise.
+            eVal = (eVal-dist);
+            if(eVal < 0.f) eVal = 0.f;
+            eVal = GetAdjustedRange(eVal, 0.f, 1.f);
+
+            currentTileColor = GetTileType(eVal);
+            quad[0].color = quad[1].color = quad[2].color = quad[3].color = currentTileColor;
         };
     };
 };
