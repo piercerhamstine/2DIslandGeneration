@@ -13,6 +13,7 @@ public:
     // Setters
     void SetText(sf::String text);
     void SetForeground(sf::Color);
+    void SetPosition(sf::Vector2f pos);
 
     // Getters
     sf::Text& GetText();
@@ -22,6 +23,8 @@ private:
     virtual void draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const;
     sf::Vector2f buttonSize;
     sf::Text buttonText;
+    sf::Vector2f buttonPosition;
+    sf::VertexArray vertices;
 };
 
 #endif
