@@ -24,20 +24,6 @@ int main()
                 window.close();
         }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-        }
-        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        {
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        {
-        }
-        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-        }
-
         window.clear();
         window.draw(m);
         window.display();
