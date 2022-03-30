@@ -20,7 +20,7 @@ public:
     virtual void OnMousePressed();
 private:
     virtual void draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const;
-    sf::Vector2u buttonSize;
+    sf::Vector2f buttonSize;
     sf::Text buttonText;
 };
 
