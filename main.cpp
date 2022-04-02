@@ -13,8 +13,13 @@ int main()
 {
     window.create(sf::VideoMode(1200, 800), "SFML");
 
-    Button b(100,100);
+    sf::Font font;
+    font.loadFromFile("OpenSans-Light.ttf");
 
+    Button b(100,100);
+    b.SetFont(font);
+    b.SetText("Generate");
+    
     Map m(sf::Vector2u(1,1), 700, 700);
     m.GenerateMap();
 

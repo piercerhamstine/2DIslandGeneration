@@ -11,6 +11,8 @@ public:
     bool PointIntersects(sf::Vector2f point);
 
     // Setters
+    void SetSize(sf::Vector2f size);
+    void SetFont(sf::Font& font);
     void SetText(sf::String text);
     void SetForeground(sf::Color);
     void SetPosition(sf::Vector2f pos);
@@ -21,6 +23,7 @@ public:
     virtual void OnMousePressed();
 private:
     virtual void draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const;
+
     sf::Vector2f buttonSize;
     sf::Text buttonText;
     sf::Vector2f buttonPosition;
