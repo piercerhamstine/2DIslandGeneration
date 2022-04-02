@@ -11,9 +11,9 @@ sf::RenderWindow window;
 
 int main()
 {
-    window.create(sf::VideoMode(1200, 720), "SFML");
+    window.create(sf::VideoMode(1200, 800), "SFML");
 
-    Button b(10,10);
+    Button b(100,100);
 
     Map m(sf::Vector2u(1,1), 700, 700);
     m.GenerateMap();
@@ -28,8 +28,8 @@ int main()
         }
 
         window.clear();
-        window.draw(b);
         window.draw(m);
+        window.draw(b);
         window.display();
     }
 

@@ -8,7 +8,7 @@ class Button : public sf::Drawable
 public:
     Button(float width,  float height);
 
-    bool pointIntersects(sf::Vector2f point);
+    bool PointIntersects(sf::Vector2f point);
 
     // Setters
     void SetText(sf::String text);
