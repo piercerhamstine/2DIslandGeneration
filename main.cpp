@@ -22,6 +22,9 @@ int main()
     Button b(100,100);
     b.SetFont(font);
     b.SetText("Generate");
+    b.SetCallback([&](){
+        m.GenerateMap();
+    });
 
     while (window.isOpen())
     {
