@@ -1,6 +1,8 @@
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
+#include <iostream>
+#include <functional>
 #include "SFML/Graphics.hpp"
 
 class Button : public sf::Drawable
@@ -8,18 +10,19 @@ class Button : public sf::Drawable
 public:
     Button(float width,  float height);
 
-    bool PointIntersects(sf::Vector2f point);
+    bool PointIntersects(const sf::Vector2f& point);
 
     // Setters
-    void SetSize(sf::Vector2f size);
-    void SetFont(sf::Font& font);
-    void SetText(sf::String text);
-    void SetForeground(sf::Color);
-    void SetPosition(sf::Vector2f pos);
+    void SetSize(const sf::Vector2f& size);
+    void SetFont(const sf::Font& font);
+    void SetText(const sf::String text);
+    void SetForeground(const sf::Color c);
+    void SetPosition(const sf::Vector2f pos);
 
     // Getters
     sf::Text& GetText();
 
+    virtual void OnEvent(const sf::Event& event);
     virtual void OnMousePressed();
 private:
     virtual void draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const;

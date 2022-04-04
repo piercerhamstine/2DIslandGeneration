@@ -13,30 +13,50 @@ Button::Button(float width, float height)
     buttonText.setFillColor(sf::Color::Black);
 };
 
-bool Button::PointIntersects(sf::Vector2f point)
+bool Button::PointIntersects(const sf::Vector2f& point)
 {
-    // Find if the point intersects the button.
+    if((point.x > buttonPosition.x && point.x < (buttonPosition.x+buttonSize.x)) && (point.y > buttonPosition.y && point.y < buttonPosition.y+buttonSize.y))
+    {
+        return true;
+    };
 
-    // TODO
     return false;
 };
 
-void Button::SetFont(sf::Font& font)
+void Button::SetSize(const sf::Vector2f& size)
+{
+    buttonSize.x = size.x;
+    buttonSize.y = size.y;
+
+    // Top left
+    vertices[0].position = sf::Vector2f(buttonPosition.x, buttonPosition.y);
+    // Top right
+    vertices[1].position = sf::Vector2f(buttonPosition.x+buttonSize.x, buttonPosition.y);
+    // Bottom Right
+    vertices[2].position = sf::Vector2f(buttonPosition.x+buttonSize.x, buttonPosition.y+buttonSize.y);
+    // Bottom Left
+    vertices[3].position = sf::Vector2f(buttonPosition.x, buttonPosition.y+buttonSize.y);
+}
+
+void Button::SetFont(const sf::Font& font)
 {
     buttonText.setFont(font);
 };
 
-void Button::SetText(sf::String text)
+void Button::SetText(const sf::String text)
 {
+    sf::FloatRect b = buttonText.getLocalBounds();
+
     buttonText.setString(text);
+    SetSize(sf::Vector2f(buttonText.getLocalBounds().width, buttonText.getLocalBounds().height));
 }
 
-void Button::SetForeground(sf::Color c)
+void Button::SetForeground(const sf::Color c)
 {
     vertices[0].color = vertices[1].color = vertices[2].color = vertices[3].color = c;
 };
 
-void Button::SetPosition(sf::Vector2f pos)
+void Button::SetPosition(const sf::Vector2f pos)
 {
     buttonPosition = pos;
 
@@ -56,6 +76,18 @@ sf::Text& Button::GetText()
 {
     return buttonText;
 }
+
+void Button::OnEvent(const sf::Event& event)
+{
+    if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Button::Left)
+    {
+        sf::Vector2f mPos = sf::Vector2f(event.mouseButton.x, event.mouseButton.y);
+        if(PointIntersects(mPos))
+        {
+            // Trigger button pressed call back here.
+        }
+    }
+};
 
 void Button::OnMousePressed()
 {

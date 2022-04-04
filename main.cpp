@@ -28,6 +28,7 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
+            b.OnEvent(event);
             if (event.type == sf::Event::Closed)
                 window.close();
         }
