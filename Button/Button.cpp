@@ -72,6 +72,11 @@ void Button::SetPosition(const sf::Vector2f pos)
     buttonText.setPosition(buttonPosition);
 };
 
+void Button::SetCallback(void(*func)())
+{
+    buttonCallback = func;
+};
+
 sf::Text& Button::GetText()
 {
     return buttonText;
@@ -84,14 +89,17 @@ void Button::OnEvent(const sf::Event& event)
         sf::Vector2f mPos = sf::Vector2f(event.mouseButton.x, event.mouseButton.y);
         if(PointIntersects(mPos))
         {
-            // Trigger button pressed call back here.
+            OnMousePressed();
         }
     }
 };
 
 void Button::OnMousePressed()
 {
-    // default button pressed.
+    if(buttonCallback)
+    {
+        buttonCallback();
+    }
 };
 
 void Button::draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const

@@ -19,7 +19,7 @@ int main()
     Button b(100,100);
     b.SetFont(font);
     b.SetText("Generate");
-    
+
     Map m(sf::Vector2u(1,1), 700, 700);
     m.GenerateMap();
 
