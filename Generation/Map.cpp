@@ -45,7 +45,7 @@ sf::Color Map::GetTileType(float eVal, float mVal)
     };
     if(eVal > .6)
     {
-        if(mVal > .3f) return forest;
+        if(mVal > .6f) return forest;
         return stone;
     };
     if(eVal > .3)
