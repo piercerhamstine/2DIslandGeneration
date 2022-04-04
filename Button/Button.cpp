@@ -72,7 +72,7 @@ void Button::SetPosition(const sf::Vector2f pos)
     buttonText.setPosition(buttonPosition);
 };
 
-void Button::SetCallback(void(*func)())
+void Button::SetCallback(std::function<void(void)> func)
 {
     buttonCallback = func;
 };

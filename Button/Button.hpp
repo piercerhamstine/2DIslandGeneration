@@ -18,7 +18,7 @@ public:
     void SetText(const sf::String text);
     void SetForeground(const sf::Color c);
     void SetPosition(const sf::Vector2f pos);
-    void SetCallback(void(*func)());
+    void SetCallback(std::function<void(void)> func);
 
     // Getters
     sf::Text& GetText();

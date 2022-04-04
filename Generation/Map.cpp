@@ -11,10 +11,7 @@ Map::Map(sf::Vector2u tileSize, unsigned int width, unsigned int height):vertice
     centerY = (float)mapHeight/2.f;
 
     elevation.SetNoiseType(FastNoiseLite::NoiseType::NoiseType_OpenSimplex2);
-    elevation.SetSeed(time(nullptr));
-
     moisture.SetNoiseType(FastNoiseLite::NoiseType::NoiseType_OpenSimplex2);
-    moisture.SetSeed(time(NULL));
 
     vertices.setPrimitiveType(sf::Quads);
     vertices.resize(mapWidth*mapHeight*4);
@@ -69,6 +66,9 @@ sf::Color Map::GetTileType(float eVal, float mVal)
 
 void Map::GenerateMap()
 {
+    elevation.SetSeed(time(nullptr));
+    moisture.SetSeed(time(NULL));
+
     for(unsigned int i = 0; i < mapWidth; ++i)
     {
         for(unsigned int j = 0; j < mapHeight; ++j)

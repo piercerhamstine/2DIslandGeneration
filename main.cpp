@@ -16,12 +16,12 @@ int main()
     sf::Font font;
     font.loadFromFile("OpenSans-Light.ttf");
 
+    Map m(sf::Vector2u(1,1), 700, 700);
+    m.GenerateMap();
+
     Button b(100,100);
     b.SetFont(font);
     b.SetText("Generate");
-
-    Map m(sf::Vector2u(1,1), 700, 700);
-    m.GenerateMap();
 
     while (window.isOpen())
     {
