@@ -26,6 +26,7 @@ public:
     virtual void OnEvent(const sf::Event& event);
     virtual void OnMousePressed();
 private:
+    void UpdateTextPos();
     virtual void draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const;
 
     std::function<void(void)> buttonCallback;

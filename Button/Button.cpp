@@ -49,6 +49,7 @@ void Button::SetText(const sf::String text)
 
     buttonText.setString(text);
     SetSize(sf::Vector2f(buttonText.getLocalBounds().width, buttonText.getLocalBounds().height));
+    UpdateTextPos();
 }
 
 void Button::SetForeground(const sf::Color c)
@@ -69,7 +70,8 @@ void Button::SetPosition(const sf::Vector2f pos)
     // Bottom Left
     vertices[3].position = sf::Vector2f(pos.x, pos.y+buttonSize.y);
 
-    buttonText.setPosition(buttonPosition);
+    
+    buttonText.setPosition(pos);
 };
 
 void Button::SetCallback(std::function<void(void)> func)
@@ -100,6 +102,11 @@ void Button::OnMousePressed()
     {
         buttonCallback();
     }
+};
+
+void Button::UpdateTextPos()
+{
+    buttonText.setPosition(buttonPosition.x, (buttonPosition.y + buttonSize.y/2) - (buttonText.getLocalBounds().height));
 };
 
 void Button::draw(sf::RenderTarget& rTarget, sf::RenderStates rStates) const
