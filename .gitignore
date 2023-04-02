@@ -25,3 +25,5 @@ FastNoiseLite.h
 
 # Executables
 *.exe
+
+.gitignore
